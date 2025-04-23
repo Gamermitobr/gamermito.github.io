@@ -15,36 +15,19 @@
  * the License.
  */
 
-class Google_Service_AdSense_Accounts extends Google_Collection
+class Google_Service_AdSense_SavedReport extends Google_Model
 {
-  protected $collection_key = 'items';
-  public $etag;
-  protected $itemsType = 'Google_Service_AdSense_Account';
-  protected $itemsDataType = 'array';
+  public $id;
   public $kind;
-  public $nextPageToken;
+  public $name;
 
-  public function setEtag($etag)
+  public function setId($id)
   {
-    $this->etag = $etag;
+    $this->id = $id;
   }
-  public function getEtag()
+  public function getId()
   {
-    return $this->etag;
-  }
-  /**
-   * @param Google_Service_AdSense_Account
-   */
-  public function setItems($items)
-  {
-    $this->items = $items;
-  }
-  /**
-   * @return Google_Service_AdSense_Account
-   */
-  public function getItems()
-  {
-    return $this->items;
+    return $this->id;
   }
   public function setKind($kind)
   {
@@ -54,12 +37,12 @@ class Google_Service_AdSense_Accounts extends Google_Collection
   {
     return $this->kind;
   }
-  public function setNextPageToken($nextPageToken)
+  public function setName($name)
   {
-    $this->nextPageToken = $nextPageToken;
+    $this->name = $name;
   }
-  public function getNextPageToken()
+  public function getName()
   {
-    return $this->nextPageToken;
+    return $this->name;
   }
 }

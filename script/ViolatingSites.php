@@ -19,23 +19,23 @@
  * The "violatingSites" collection of methods.
  * Typical usage is:
  *  <code>
- *   $abusiveexperiencereportService = new Google_Service_AbusiveExperienceReport(...);
- *   $violatingSites = $abusiveexperiencereportService->violatingSites;
+ *   $adexperiencereportService = new Google_Service_AdExperienceReport(...);
+ *   $violatingSites = $adexperiencereportService->violatingSites;
  *  </code>
  */
-class Google_Service_AbusiveExperienceReport_Resource_ViolatingSites extends Google_Service_Resource
+class Google_Service_AdExperienceReport_Resource_ViolatingSites extends Google_Service_Resource
 {
   /**
-   * Lists sites that are failing in the Abusive Experience Report.
-   * (violatingSites.listViolatingSites)
+   * Lists sites that are failing in the Ad Experience Report on at least one
+   * platform. (violatingSites.listViolatingSites)
    *
    * @param array $optParams Optional parameters.
-   * @return Google_Service_AbusiveExperienceReport_ViolatingSitesResponse
+   * @return Google_Service_AdExperienceReport_ViolatingSitesResponse
    */
   public function listViolatingSites($optParams = array())
   {
     $params = array();
     $params = array_merge($params, $optParams);
-    return $this->call('list', array($params), "Google_Service_AbusiveExperienceReport_ViolatingSitesResponse");
+    return $this->call('list', array($params), "Google_Service_AdExperienceReport_ViolatingSitesResponse");
   }
 }

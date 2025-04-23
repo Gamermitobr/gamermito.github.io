@@ -15,55 +15,41 @@
  * the License.
  */
 
-class Google_Service_AbusiveExperienceReport_SiteSummaryResponse extends Google_Model
+class Google_Service_AdExperienceReport_SiteSummaryResponse extends Google_Model
 {
-  public $abusiveStatus;
-  public $enforcementTime;
-  public $filterStatus;
-  public $lastChangeTime;
-  public $reportUrl;
+  protected $desktopSummaryType = 'Google_Service_AdExperienceReport_PlatformSummary';
+  protected $desktopSummaryDataType = '';
+  protected $mobileSummaryType = 'Google_Service_AdExperienceReport_PlatformSummary';
+  protected $mobileSummaryDataType = '';
   public $reviewedSite;
-  public $underReview;
 
-  public function setAbusiveStatus($abusiveStatus)
+  /**
+   * @param Google_Service_AdExperienceReport_PlatformSummary
+   */
+  public function setDesktopSummary(Google_Service_AdExperienceReport_PlatformSummary $desktopSummary)
   {
-    $this->abusiveStatus = $abusiveStatus;
+    $this->desktopSummary = $desktopSummary;
   }
-  public function getAbusiveStatus()
+  /**
+   * @return Google_Service_AdExperienceReport_PlatformSummary
+   */
+  public function getDesktopSummary()
   {
-    return $this->abusiveStatus;
+    return $this->desktopSummary;
   }
-  public function setEnforcementTime($enforcementTime)
+  /**
+   * @param Google_Service_AdExperienceReport_PlatformSummary
+   */
+  public function setMobileSummary(Google_Service_AdExperienceReport_PlatformSummary $mobileSummary)
   {
-    $this->enforcementTime = $enforcementTime;
+    $this->mobileSummary = $mobileSummary;
   }
-  public function getEnforcementTime()
+  /**
+   * @return Google_Service_AdExperienceReport_PlatformSummary
+   */
+  public function getMobileSummary()
   {
-    return $this->enforcementTime;
-  }
-  public function setFilterStatus($filterStatus)
-  {
-    $this->filterStatus = $filterStatus;
-  }
-  public function getFilterStatus()
-  {
-    return $this->filterStatus;
-  }
-  public function setLastChangeTime($lastChangeTime)
-  {
-    $this->lastChangeTime = $lastChangeTime;
-  }
-  public function getLastChangeTime()
-  {
-    return $this->lastChangeTime;
-  }
-  public function setReportUrl($reportUrl)
-  {
-    $this->reportUrl = $reportUrl;
-  }
-  public function getReportUrl()
-  {
-    return $this->reportUrl;
+    return $this->mobileSummary;
   }
   public function setReviewedSite($reviewedSite)
   {
@@ -72,13 +58,5 @@ class Google_Service_AbusiveExperienceReport_SiteSummaryResponse extends Google_
   public function getReviewedSite()
   {
     return $this->reviewedSite;
-  }
-  public function setUnderReview($underReview)
-  {
-    $this->underReview = $underReview;
-  }
-  public function getUnderReview()
-  {
-    return $this->underReview;
   }
 }

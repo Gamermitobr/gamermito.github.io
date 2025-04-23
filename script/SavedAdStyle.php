@@ -15,36 +15,35 @@
  * the License.
  */
 
-class Google_Service_AdSense_Accounts extends Google_Collection
+class Google_Service_AdSense_SavedAdStyle extends Google_Model
 {
-  protected $collection_key = 'items';
-  public $etag;
-  protected $itemsType = 'Google_Service_AdSense_Account';
-  protected $itemsDataType = 'array';
+  protected $adStyleType = 'Google_Service_AdSense_AdStyle';
+  protected $adStyleDataType = '';
+  public $id;
   public $kind;
-  public $nextPageToken;
+  public $name;
 
-  public function setEtag($etag)
+  /**
+   * @param Google_Service_AdSense_AdStyle
+   */
+  public function setAdStyle(Google_Service_AdSense_AdStyle $adStyle)
   {
-    $this->etag = $etag;
-  }
-  public function getEtag()
-  {
-    return $this->etag;
+    $this->adStyle = $adStyle;
   }
   /**
-   * @param Google_Service_AdSense_Account
+   * @return Google_Service_AdSense_AdStyle
    */
-  public function setItems($items)
+  public function getAdStyle()
   {
-    $this->items = $items;
+    return $this->adStyle;
   }
-  /**
-   * @return Google_Service_AdSense_Account
-   */
-  public function getItems()
+  public function setId($id)
   {
-    return $this->items;
+    $this->id = $id;
+  }
+  public function getId()
+  {
+    return $this->id;
   }
   public function setKind($kind)
   {
@@ -54,12 +53,12 @@ class Google_Service_AdSense_Accounts extends Google_Collection
   {
     return $this->kind;
   }
-  public function setNextPageToken($nextPageToken)
+  public function setName($name)
   {
-    $this->nextPageToken = $nextPageToken;
+    $this->name = $name;
   }
-  public function getNextPageToken()
+  public function getName()
   {
-    return $this->nextPageToken;
+    return $this->name;
   }
 }

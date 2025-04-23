@@ -16,29 +16,26 @@
  */
 
 /**
- * The "sites" collection of methods.
+ * The "metrics" collection of methods.
  * Typical usage is:
  *  <code>
- *   $adexperiencereportService = new Google_Service_AdExperienceReport(...);
- *   $sites = $adexperiencereportService->sites;
+ *   $adsenseService = new Google_Service_AdSense(...);
+ *   $metrics = $adsenseService->metrics;
  *  </code>
  */
-class Google_Service_AdExperienceReport_Resource_Sites extends Google_Service_Resource
+class Google_Service_AdSense_Resource_MetadataMetrics extends Google_Service_Resource
 {
   /**
-   * Gets a site's Ad Experience Report summary. (sites.get)
+   * List the metadata for the metrics available to this AdSense account.
+   * (metrics.listMetadataMetrics)
    *
-   * @param string $name Required. The name of the site whose summary to get, e.g.
-   * `sites/http%3A%2F%2Fwww.google.com%2F`.
-   *
-   * Format: `sites/{site}`
    * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExperienceReport_SiteSummaryResponse
+   * @return Google_Service_AdSense_Metadata
    */
-  public function get($name, $optParams = array())
+  public function listMetadataMetrics($optParams = array())
   {
-    $params = array('name' => $name);
+    $params = array();
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_AdExperienceReport_SiteSummaryResponse");
+    return $this->call('list', array($params), "Google_Service_AdSense_Metadata");
   }
 }

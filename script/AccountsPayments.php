@@ -16,29 +16,27 @@
  */
 
 /**
- * The "sites" collection of methods.
+ * The "payments" collection of methods.
  * Typical usage is:
  *  <code>
- *   $adexperiencereportService = new Google_Service_AdExperienceReport(...);
- *   $sites = $adexperiencereportService->sites;
+ *   $adsenseService = new Google_Service_AdSense(...);
+ *   $payments = $adsenseService->payments;
  *  </code>
  */
-class Google_Service_AdExperienceReport_Resource_Sites extends Google_Service_Resource
+class Google_Service_AdSense_Resource_AccountsPayments extends Google_Service_Resource
 {
   /**
-   * Gets a site's Ad Experience Report summary. (sites.get)
+   * List the payments for the specified AdSense account.
+   * (payments.listAccountsPayments)
    *
-   * @param string $name Required. The name of the site whose summary to get, e.g.
-   * `sites/http%3A%2F%2Fwww.google.com%2F`.
-   *
-   * Format: `sites/{site}`
+   * @param string $accountId Account for which to retrieve the payments.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExperienceReport_SiteSummaryResponse
+   * @return Google_Service_AdSense_Payments
    */
-  public function get($name, $optParams = array())
+  public function listAccountsPayments($accountId, $optParams = array())
   {
-    $params = array('name' => $name);
+    $params = array('accountId' => $accountId);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_AdExperienceReport_SiteSummaryResponse");
+    return $this->call('list', array($params), "Google_Service_AdSense_Payments");
   }
 }

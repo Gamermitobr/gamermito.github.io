@@ -15,36 +15,29 @@
  * the License.
  */
 
-class Google_Service_AdSense_Accounts extends Google_Collection
+class Google_Service_AdSense_AdClient extends Google_Model
 {
-  protected $collection_key = 'items';
-  public $etag;
-  protected $itemsType = 'Google_Service_AdSense_Account';
-  protected $itemsDataType = 'array';
+  public $arcOptIn;
+  public $id;
   public $kind;
-  public $nextPageToken;
+  public $productCode;
+  public $supportsReporting;
 
-  public function setEtag($etag)
+  public function setArcOptIn($arcOptIn)
   {
-    $this->etag = $etag;
+    $this->arcOptIn = $arcOptIn;
   }
-  public function getEtag()
+  public function getArcOptIn()
   {
-    return $this->etag;
+    return $this->arcOptIn;
   }
-  /**
-   * @param Google_Service_AdSense_Account
-   */
-  public function setItems($items)
+  public function setId($id)
   {
-    $this->items = $items;
+    $this->id = $id;
   }
-  /**
-   * @return Google_Service_AdSense_Account
-   */
-  public function getItems()
+  public function getId()
   {
-    return $this->items;
+    return $this->id;
   }
   public function setKind($kind)
   {
@@ -54,12 +47,20 @@ class Google_Service_AdSense_Accounts extends Google_Collection
   {
     return $this->kind;
   }
-  public function setNextPageToken($nextPageToken)
+  public function setProductCode($productCode)
   {
-    $this->nextPageToken = $nextPageToken;
+    $this->productCode = $productCode;
   }
-  public function getNextPageToken()
+  public function getProductCode()
   {
-    return $this->nextPageToken;
+    return $this->productCode;
+  }
+  public function setSupportsReporting($supportsReporting)
+  {
+    $this->supportsReporting = $supportsReporting;
+  }
+  public function getSupportsReporting()
+  {
+    return $this->supportsReporting;
   }
 }

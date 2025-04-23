@@ -15,28 +15,22 @@
  * the License.
  */
 
-class Google_Service_AdSense_Account extends Google_Collection
+class Google_Service_AdSense_CustomChannel extends Google_Model
 {
-  protected $collection_key = 'subAccounts';
-  protected $internal_gapi_mappings = array(
-        "creationTime" => "creation_time",
-  );
-  public $creationTime;
+  public $code;
   public $id;
   public $kind;
   public $name;
-  public $premium;
-  protected $subAccountsType = 'Google_Service_AdSense_Account';
-  protected $subAccountsDataType = 'array';
-  public $timezone;
+  protected $targetingInfoType = 'Google_Service_AdSense_CustomChannelTargetingInfo';
+  protected $targetingInfoDataType = '';
 
-  public function setCreationTime($creationTime)
+  public function setCode($code)
   {
-    $this->creationTime = $creationTime;
+    $this->code = $code;
   }
-  public function getCreationTime()
+  public function getCode()
   {
-    return $this->creationTime;
+    return $this->code;
   }
   public function setId($id)
   {
@@ -62,34 +56,18 @@ class Google_Service_AdSense_Account extends Google_Collection
   {
     return $this->name;
   }
-  public function setPremium($premium)
+  /**
+   * @param Google_Service_AdSense_CustomChannelTargetingInfo
+   */
+  public function setTargetingInfo(Google_Service_AdSense_CustomChannelTargetingInfo $targetingInfo)
   {
-    $this->premium = $premium;
-  }
-  public function getPremium()
-  {
-    return $this->premium;
+    $this->targetingInfo = $targetingInfo;
   }
   /**
-   * @param Google_Service_AdSense_Account
+   * @return Google_Service_AdSense_CustomChannelTargetingInfo
    */
-  public function setSubAccounts($subAccounts)
+  public function getTargetingInfo()
   {
-    $this->subAccounts = $subAccounts;
-  }
-  /**
-   * @return Google_Service_AdSense_Account
-   */
-  public function getSubAccounts()
-  {
-    return $this->subAccounts;
-  }
-  public function setTimezone($timezone)
-  {
-    $this->timezone = $timezone;
-  }
-  public function getTimezone()
-  {
-    return $this->timezone;
+    return $this->targetingInfo;
   }
 }

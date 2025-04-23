@@ -15,24 +15,25 @@
  * the License.
  */
 
-class Google_Service_AdExperienceReport_ViolatingSitesResponse extends Google_Collection
+class Google_Service_AdSense_AdStyleFont extends Google_Model
 {
-  protected $collection_key = 'violatingSites';
-  protected $violatingSitesType = 'Google_Service_AdExperienceReport_SiteSummaryResponse';
-  protected $violatingSitesDataType = 'array';
+  public $family;
+  public $size;
 
-  /**
-   * @param Google_Service_AdExperienceReport_SiteSummaryResponse
-   */
-  public function setViolatingSites($violatingSites)
+  public function setFamily($family)
   {
-    $this->violatingSites = $violatingSites;
+    $this->family = $family;
   }
-  /**
-   * @return Google_Service_AdExperienceReport_SiteSummaryResponse
-   */
-  public function getViolatingSites()
+  public function getFamily()
   {
-    return $this->violatingSites;
+    return $this->family;
+  }
+  public function setSize($size)
+  {
+    $this->size = $size;
+  }
+  public function getSize()
+  {
+    return $this->size;
   }
 }

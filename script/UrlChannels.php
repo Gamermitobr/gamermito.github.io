@@ -15,11 +15,11 @@
  * the License.
  */
 
-class Google_Service_AdSense_Accounts extends Google_Collection
+class Google_Service_AdSense_UrlChannels extends Google_Collection
 {
   protected $collection_key = 'items';
   public $etag;
-  protected $itemsType = 'Google_Service_AdSense_Account';
+  protected $itemsType = 'Google_Service_AdSense_UrlChannel';
   protected $itemsDataType = 'array';
   public $kind;
   public $nextPageToken;
@@ -33,14 +33,14 @@ class Google_Service_AdSense_Accounts extends Google_Collection
     return $this->etag;
   }
   /**
-   * @param Google_Service_AdSense_Account
+   * @param Google_Service_AdSense_UrlChannel
    */
   public function setItems($items)
   {
     $this->items = $items;
   }
   /**
-   * @return Google_Service_AdSense_Account
+   * @return Google_Service_AdSense_UrlChannel
    */
   public function getItems()
   {

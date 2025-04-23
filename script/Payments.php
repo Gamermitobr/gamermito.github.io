@@ -15,24 +15,33 @@
  * the License.
  */
 
-class Google_Service_AdExperienceReport_ViolatingSitesResponse extends Google_Collection
+class Google_Service_AdSense_Payments extends Google_Collection
 {
-  protected $collection_key = 'violatingSites';
-  protected $violatingSitesType = 'Google_Service_AdExperienceReport_SiteSummaryResponse';
-  protected $violatingSitesDataType = 'array';
+  protected $collection_key = 'items';
+  protected $itemsType = 'Google_Service_AdSense_Payment';
+  protected $itemsDataType = 'array';
+  public $kind;
 
   /**
-   * @param Google_Service_AdExperienceReport_SiteSummaryResponse
+   * @param Google_Service_AdSense_Payment
    */
-  public function setViolatingSites($violatingSites)
+  public function setItems($items)
   {
-    $this->violatingSites = $violatingSites;
+    $this->items = $items;
   }
   /**
-   * @return Google_Service_AdExperienceReport_SiteSummaryResponse
+   * @return Google_Service_AdSense_Payment
    */
-  public function getViolatingSites()
+  public function getItems()
   {
-    return $this->violatingSites;
+    return $this->items;
+  }
+  public function setKind($kind)
+  {
+    $this->kind = $kind;
+  }
+  public function getKind()
+  {
+    return $this->kind;
   }
 }
