@@ -1,45 +1,52 @@
-$(function () {
+(function ($) {
+    "use strict";
 
-    // init the validator
-    // validator files are included in the download package
-    // otherwise download from http://1000hz.github.io/bootstrap-validator
+    jQuery(document).ready(function ($) {
+        $(document).on('submit', '#contact_form_submit', function (e) {
+            e.preventDefault();
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var subject = $('#subject').val();
+            var surename = $('#surename').val();
+            var message = $('#message').val();
+            var phone = $('#phone').val();
 
-    $('#contact-form').validator();
+            if (name && email && message && surename) {
+                $.ajax({
+                    type: "POST",
+                    url: 'contact.php',
+                    data: {
+                        'name': name,
+                        'email': email,
+                        'subject': subject,
+                        'surename': surename,
+                        'message': message,
+                        'phone': phone,
+                    },
+                    success: function (data) {
+                        $('#contact_form_submit').children('.email-success').remove();
+                        $('#contact_form_submit').prepend('<span class="alert alert-success email-success">' + data + '</span>');
+                        $('#name').val('');
+                        $('#email').val('');
+                        $('#message').val('');
+                        $('#surename').val('');
+                        $('#subject').val('');
+                        $('#phone').val('');
+                        // $('#map').height('576px');
+                        $('.email-success').fadeOut(3000);
+                    },
+                    error: function (res) {
 
-
-    // when the form is submitted
-    $('#contact-form').on('submit', function (e) {
-
-        // if the validator does not prevent form submit
-        if (!e.isDefaultPrevented()) {
-            var url = "contact.php";
-
-            // POST values in the background the the script URL
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: $(this).serialize(),
-                success: function (data)
-                {
-                    // data = JSON object that contact.php returns
-
-                    // we recieve the type of the message: success x danger and apply it to the 
-                    var messageAlert = 'alert-' + data.type;
-                    var messageText = data.message;
-
-                    // let's compose Bootstrap alert box HTML
-                    var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-                    
-                    // If we have messageAlert and messageText
-                    if (messageAlert && messageText) {
-                        // inject the alert to .messages div in our form
-                        $('#contact-form').find('.messages').html(alertBox);
-                        // empty the form
-                        $('#contact-form')[0].reset();
                     }
-                }
-            });
-            return false;
-        }
+                });
+            } else {
+                $('#contact_form_submit').children('.email-success').remove();
+                $('#contact_form_submit').prepend('<span class="alert alert-danger email-success">All Fields are Required.</span>');
+                // $('#map').height('576px');
+                $('.email-success').fadeOut(3000);
+            }
+
+        });
     })
-});
+
+}(jQuery));
