@@ -15,38 +15,206 @@
  * the License.
  */
 
-/**
- * The "performanceReport" collection of methods.
- * Typical usage is:
- *  <code>
- *   $adexchangebuyerService = new Google_Service_AdExchangeBuyer(...);
- *   $performanceReport = $adexchangebuyerService->performanceReport;
- *  </code>
- */
-class Google_Service_AdExchangeBuyer_Resource_PerformanceReport extends Google_Service_Resource
+class Google_Service_AdExchangeBuyer_PerformanceReport extends Google_Collection
 {
-  /**
-   * Retrieves the authenticated user's list of performance metrics.
-   * (performanceReport.listPerformanceReport)
-   *
-   * @param string $accountId The account id to get the reports.
-   * @param string $endDateTime The end time of the report in ISO 8601 timestamp
-   * format using UTC.
-   * @param string $startDateTime The start time of the report in ISO 8601
-   * timestamp format using UTC.
-   * @param array $optParams Optional parameters.
-   *
-   * @opt_param string maxResults Maximum number of entries returned on one result
-   * page. If not set, the default is 100. Optional.
-   * @opt_param string pageToken A continuation token, used to page through
-   * performance reports. To retrieve the next page, set this parameter to the
-   * value of "nextPageToken" from the previous response. Optional.
-   * @return Google_Service_AdExchangeBuyer_PerformanceReportList
-   */
-  public function listPerformanceReport($accountId, $endDateTime, $startDateTime, $optParams = array())
+  protected $collection_key = 'hostedMatchStatusRate';
+  public $bidRate;
+  public $bidRequestRate;
+  public $calloutStatusRate;
+  public $cookieMatcherStatusRate;
+  public $creativeStatusRate;
+  public $filteredBidRate;
+  public $hostedMatchStatusRate;
+  public $inventoryMatchRate;
+  public $kind;
+  public $latency50thPercentile;
+  public $latency85thPercentile;
+  public $latency95thPercentile;
+  public $noQuotaInRegion;
+  public $outOfQuota;
+  public $pixelMatchRequests;
+  public $pixelMatchResponses;
+  public $quotaConfiguredLimit;
+  public $quotaThrottledLimit;
+  public $region;
+  public $successfulRequestRate;
+  public $timestamp;
+  public $unsuccessfulRequestRate;
+
+  public function setBidRate($bidRate)
   {
-    $params = array('accountId' => $accountId, 'endDateTime' => $endDateTime, 'startDateTime' => $startDateTime);
-    $params = array_merge($params, $optParams);
-    return $this->call('list', array($params), "Google_Service_AdExchangeBuyer_PerformanceReportList");
+    $this->bidRate = $bidRate;
+  }
+  public function getBidRate()
+  {
+    return $this->bidRate;
+  }
+  public function setBidRequestRate($bidRequestRate)
+  {
+    $this->bidRequestRate = $bidRequestRate;
+  }
+  public function getBidRequestRate()
+  {
+    return $this->bidRequestRate;
+  }
+  public function setCalloutStatusRate($calloutStatusRate)
+  {
+    $this->calloutStatusRate = $calloutStatusRate;
+  }
+  public function getCalloutStatusRate()
+  {
+    return $this->calloutStatusRate;
+  }
+  public function setCookieMatcherStatusRate($cookieMatcherStatusRate)
+  {
+    $this->cookieMatcherStatusRate = $cookieMatcherStatusRate;
+  }
+  public function getCookieMatcherStatusRate()
+  {
+    return $this->cookieMatcherStatusRate;
+  }
+  public function setCreativeStatusRate($creativeStatusRate)
+  {
+    $this->creativeStatusRate = $creativeStatusRate;
+  }
+  public function getCreativeStatusRate()
+  {
+    return $this->creativeStatusRate;
+  }
+  public function setFilteredBidRate($filteredBidRate)
+  {
+    $this->filteredBidRate = $filteredBidRate;
+  }
+  public function getFilteredBidRate()
+  {
+    return $this->filteredBidRate;
+  }
+  public function setHostedMatchStatusRate($hostedMatchStatusRate)
+  {
+    $this->hostedMatchStatusRate = $hostedMatchStatusRate;
+  }
+  public function getHostedMatchStatusRate()
+  {
+    return $this->hostedMatchStatusRate;
+  }
+  public function setInventoryMatchRate($inventoryMatchRate)
+  {
+    $this->inventoryMatchRate = $inventoryMatchRate;
+  }
+  public function getInventoryMatchRate()
+  {
+    return $this->inventoryMatchRate;
+  }
+  public function setKind($kind)
+  {
+    $this->kind = $kind;
+  }
+  public function getKind()
+  {
+    return $this->kind;
+  }
+  public function setLatency50thPercentile($latency50thPercentile)
+  {
+    $this->latency50thPercentile = $latency50thPercentile;
+  }
+  public function getLatency50thPercentile()
+  {
+    return $this->latency50thPercentile;
+  }
+  public function setLatency85thPercentile($latency85thPercentile)
+  {
+    $this->latency85thPercentile = $latency85thPercentile;
+  }
+  public function getLatency85thPercentile()
+  {
+    return $this->latency85thPercentile;
+  }
+  public function setLatency95thPercentile($latency95thPercentile)
+  {
+    $this->latency95thPercentile = $latency95thPercentile;
+  }
+  public function getLatency95thPercentile()
+  {
+    return $this->latency95thPercentile;
+  }
+  public function setNoQuotaInRegion($noQuotaInRegion)
+  {
+    $this->noQuotaInRegion = $noQuotaInRegion;
+  }
+  public function getNoQuotaInRegion()
+  {
+    return $this->noQuotaInRegion;
+  }
+  public function setOutOfQuota($outOfQuota)
+  {
+    $this->outOfQuota = $outOfQuota;
+  }
+  public function getOutOfQuota()
+  {
+    return $this->outOfQuota;
+  }
+  public function setPixelMatchRequests($pixelMatchRequests)
+  {
+    $this->pixelMatchRequests = $pixelMatchRequests;
+  }
+  public function getPixelMatchRequests()
+  {
+    return $this->pixelMatchRequests;
+  }
+  public function setPixelMatchResponses($pixelMatchResponses)
+  {
+    $this->pixelMatchResponses = $pixelMatchResponses;
+  }
+  public function getPixelMatchResponses()
+  {
+    return $this->pixelMatchResponses;
+  }
+  public function setQuotaConfiguredLimit($quotaConfiguredLimit)
+  {
+    $this->quotaConfiguredLimit = $quotaConfiguredLimit;
+  }
+  public function getQuotaConfiguredLimit()
+  {
+    return $this->quotaConfiguredLimit;
+  }
+  public function setQuotaThrottledLimit($quotaThrottledLimit)
+  {
+    $this->quotaThrottledLimit = $quotaThrottledLimit;
+  }
+  public function getQuotaThrottledLimit()
+  {
+    return $this->quotaThrottledLimit;
+  }
+  public function setRegion($region)
+  {
+    $this->region = $region;
+  }
+  public function getRegion()
+  {
+    return $this->region;
+  }
+  public function setSuccessfulRequestRate($successfulRequestRate)
+  {
+    $this->successfulRequestRate = $successfulRequestRate;
+  }
+  public function getSuccessfulRequestRate()
+  {
+    return $this->successfulRequestRate;
+  }
+  public function setTimestamp($timestamp)
+  {
+    $this->timestamp = $timestamp;
+  }
+  public function getTimestamp()
+  {
+    return $this->timestamp;
+  }
+  public function setUnsuccessfulRequestRate($unsuccessfulRequestRate)
+  {
+    $this->unsuccessfulRequestRate = $unsuccessfulRequestRate;
+  }
+  public function getUnsuccessfulRequestRate()
+  {
+    return $this->unsuccessfulRequestRate;
   }
 }

@@ -15,104 +15,270 @@
  * the License.
  */
 
-/**
- * The "pretargetingConfig" collection of methods.
- * Typical usage is:
- *  <code>
- *   $adexchangebuyerService = new Google_Service_AdExchangeBuyer(...);
- *   $pretargetingConfig = $adexchangebuyerService->pretargetingConfig;
- *  </code>
- */
-class Google_Service_AdExchangeBuyer_Resource_PretargetingConfig extends Google_Service_Resource
+class Google_Service_AdExchangeBuyer_PretargetingConfig extends Google_Collection
 {
-  /**
-   * Deletes an existing pretargeting config. (pretargetingConfig.delete)
-   *
-   * @param string $accountId The account id to delete the pretargeting config
-   * for.
-   * @param string $configId The specific id of the configuration to delete.
-   * @param array $optParams Optional parameters.
-   */
-  public function delete($accountId, $configId, $optParams = array())
+  protected $collection_key = 'videoPlayerSizes';
+  public $billingId;
+  public $configId;
+  public $configName;
+  public $creativeType;
+  protected $dimensionsType = 'Google_Service_AdExchangeBuyer_PretargetingConfigDimensions';
+  protected $dimensionsDataType = 'array';
+  public $excludedContentLabels;
+  public $excludedGeoCriteriaIds;
+  protected $excludedPlacementsType = 'Google_Service_AdExchangeBuyer_PretargetingConfigExcludedPlacements';
+  protected $excludedPlacementsDataType = 'array';
+  public $excludedUserLists;
+  public $excludedVerticals;
+  public $geoCriteriaIds;
+  public $isActive;
+  public $kind;
+  public $languages;
+  public $minimumViewabilityDecile;
+  public $mobileCarriers;
+  public $mobileDevices;
+  public $mobileOperatingSystemVersions;
+  protected $placementsType = 'Google_Service_AdExchangeBuyer_PretargetingConfigPlacements';
+  protected $placementsDataType = 'array';
+  public $platforms;
+  public $supportedCreativeAttributes;
+  public $userIdentifierDataRequired;
+  public $userLists;
+  public $vendorTypes;
+  public $verticals;
+  protected $videoPlayerSizesType = 'Google_Service_AdExchangeBuyer_PretargetingConfigVideoPlayerSizes';
+  protected $videoPlayerSizesDataType = 'array';
+
+  public function setBillingId($billingId)
   {
-    $params = array('accountId' => $accountId, 'configId' => $configId);
-    $params = array_merge($params, $optParams);
-    return $this->call('delete', array($params));
+    $this->billingId = $billingId;
+  }
+  public function getBillingId()
+  {
+    return $this->billingId;
+  }
+  public function setConfigId($configId)
+  {
+    $this->configId = $configId;
+  }
+  public function getConfigId()
+  {
+    return $this->configId;
+  }
+  public function setConfigName($configName)
+  {
+    $this->configName = $configName;
+  }
+  public function getConfigName()
+  {
+    return $this->configName;
+  }
+  public function setCreativeType($creativeType)
+  {
+    $this->creativeType = $creativeType;
+  }
+  public function getCreativeType()
+  {
+    return $this->creativeType;
   }
   /**
-   * Gets a specific pretargeting configuration (pretargetingConfig.get)
-   *
-   * @param string $accountId The account id to get the pretargeting config for.
-   * @param string $configId The specific id of the configuration to retrieve.
-   * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExchangeBuyer_PretargetingConfig
+   * @param Google_Service_AdExchangeBuyer_PretargetingConfigDimensions
    */
-  public function get($accountId, $configId, $optParams = array())
+  public function setDimensions($dimensions)
   {
-    $params = array('accountId' => $accountId, 'configId' => $configId);
-    $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_AdExchangeBuyer_PretargetingConfig");
+    $this->dimensions = $dimensions;
   }
   /**
-   * Inserts a new pretargeting configuration. (pretargetingConfig.insert)
-   *
-   * @param string $accountId The account id to insert the pretargeting config
-   * for.
-   * @param Google_Service_AdExchangeBuyer_PretargetingConfig $postBody
-   * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExchangeBuyer_PretargetingConfig
+   * @return Google_Service_AdExchangeBuyer_PretargetingConfigDimensions
    */
-  public function insert($accountId, Google_Service_AdExchangeBuyer_PretargetingConfig $postBody, $optParams = array())
+  public function getDimensions()
   {
-    $params = array('accountId' => $accountId, 'postBody' => $postBody);
-    $params = array_merge($params, $optParams);
-    return $this->call('insert', array($params), "Google_Service_AdExchangeBuyer_PretargetingConfig");
+    return $this->dimensions;
+  }
+  public function setExcludedContentLabels($excludedContentLabels)
+  {
+    $this->excludedContentLabels = $excludedContentLabels;
+  }
+  public function getExcludedContentLabels()
+  {
+    return $this->excludedContentLabels;
+  }
+  public function setExcludedGeoCriteriaIds($excludedGeoCriteriaIds)
+  {
+    $this->excludedGeoCriteriaIds = $excludedGeoCriteriaIds;
+  }
+  public function getExcludedGeoCriteriaIds()
+  {
+    return $this->excludedGeoCriteriaIds;
   }
   /**
-   * Retrieves a list of the authenticated user's pretargeting configurations.
-   * (pretargetingConfig.listPretargetingConfig)
-   *
-   * @param string $accountId The account id to get the pretargeting configs for.
-   * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExchangeBuyer_PretargetingConfigList
+   * @param Google_Service_AdExchangeBuyer_PretargetingConfigExcludedPlacements
    */
-  public function listPretargetingConfig($accountId, $optParams = array())
+  public function setExcludedPlacements($excludedPlacements)
   {
-    $params = array('accountId' => $accountId);
-    $params = array_merge($params, $optParams);
-    return $this->call('list', array($params), "Google_Service_AdExchangeBuyer_PretargetingConfigList");
+    $this->excludedPlacements = $excludedPlacements;
   }
   /**
-   * Updates an existing pretargeting config. This method supports patch
-   * semantics. (pretargetingConfig.patch)
-   *
-   * @param string $accountId The account id to update the pretargeting config
-   * for.
-   * @param string $configId The specific id of the configuration to update.
-   * @param Google_Service_AdExchangeBuyer_PretargetingConfig $postBody
-   * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExchangeBuyer_PretargetingConfig
+   * @return Google_Service_AdExchangeBuyer_PretargetingConfigExcludedPlacements
    */
-  public function patch($accountId, $configId, Google_Service_AdExchangeBuyer_PretargetingConfig $postBody, $optParams = array())
+  public function getExcludedPlacements()
   {
-    $params = array('accountId' => $accountId, 'configId' => $configId, 'postBody' => $postBody);
-    $params = array_merge($params, $optParams);
-    return $this->call('patch', array($params), "Google_Service_AdExchangeBuyer_PretargetingConfig");
+    return $this->excludedPlacements;
+  }
+  public function setExcludedUserLists($excludedUserLists)
+  {
+    $this->excludedUserLists = $excludedUserLists;
+  }
+  public function getExcludedUserLists()
+  {
+    return $this->excludedUserLists;
+  }
+  public function setExcludedVerticals($excludedVerticals)
+  {
+    $this->excludedVerticals = $excludedVerticals;
+  }
+  public function getExcludedVerticals()
+  {
+    return $this->excludedVerticals;
+  }
+  public function setGeoCriteriaIds($geoCriteriaIds)
+  {
+    $this->geoCriteriaIds = $geoCriteriaIds;
+  }
+  public function getGeoCriteriaIds()
+  {
+    return $this->geoCriteriaIds;
+  }
+  public function setIsActive($isActive)
+  {
+    $this->isActive = $isActive;
+  }
+  public function getIsActive()
+  {
+    return $this->isActive;
+  }
+  public function setKind($kind)
+  {
+    $this->kind = $kind;
+  }
+  public function getKind()
+  {
+    return $this->kind;
+  }
+  public function setLanguages($languages)
+  {
+    $this->languages = $languages;
+  }
+  public function getLanguages()
+  {
+    return $this->languages;
+  }
+  public function setMinimumViewabilityDecile($minimumViewabilityDecile)
+  {
+    $this->minimumViewabilityDecile = $minimumViewabilityDecile;
+  }
+  public function getMinimumViewabilityDecile()
+  {
+    return $this->minimumViewabilityDecile;
+  }
+  public function setMobileCarriers($mobileCarriers)
+  {
+    $this->mobileCarriers = $mobileCarriers;
+  }
+  public function getMobileCarriers()
+  {
+    return $this->mobileCarriers;
+  }
+  public function setMobileDevices($mobileDevices)
+  {
+    $this->mobileDevices = $mobileDevices;
+  }
+  public function getMobileDevices()
+  {
+    return $this->mobileDevices;
+  }
+  public function setMobileOperatingSystemVersions($mobileOperatingSystemVersions)
+  {
+    $this->mobileOperatingSystemVersions = $mobileOperatingSystemVersions;
+  }
+  public function getMobileOperatingSystemVersions()
+  {
+    return $this->mobileOperatingSystemVersions;
   }
   /**
-   * Updates an existing pretargeting config. (pretargetingConfig.update)
-   *
-   * @param string $accountId The account id to update the pretargeting config
-   * for.
-   * @param string $configId The specific id of the configuration to update.
-   * @param Google_Service_AdExchangeBuyer_PretargetingConfig $postBody
-   * @param array $optParams Optional parameters.
-   * @return Google_Service_AdExchangeBuyer_PretargetingConfig
+   * @param Google_Service_AdExchangeBuyer_PretargetingConfigPlacements
    */
-  public function update($accountId, $configId, Google_Service_AdExchangeBuyer_PretargetingConfig $postBody, $optParams = array())
+  public function setPlacements($placements)
   {
-    $params = array('accountId' => $accountId, 'configId' => $configId, 'postBody' => $postBody);
-    $params = array_merge($params, $optParams);
-    return $this->call('update', array($params), "Google_Service_AdExchangeBuyer_PretargetingConfig");
+    $this->placements = $placements;
+  }
+  /**
+   * @return Google_Service_AdExchangeBuyer_PretargetingConfigPlacements
+   */
+  public function getPlacements()
+  {
+    return $this->placements;
+  }
+  public function setPlatforms($platforms)
+  {
+    $this->platforms = $platforms;
+  }
+  public function getPlatforms()
+  {
+    return $this->platforms;
+  }
+  public function setSupportedCreativeAttributes($supportedCreativeAttributes)
+  {
+    $this->supportedCreativeAttributes = $supportedCreativeAttributes;
+  }
+  public function getSupportedCreativeAttributes()
+  {
+    return $this->supportedCreativeAttributes;
+  }
+  public function setUserIdentifierDataRequired($userIdentifierDataRequired)
+  {
+    $this->userIdentifierDataRequired = $userIdentifierDataRequired;
+  }
+  public function getUserIdentifierDataRequired()
+  {
+    return $this->userIdentifierDataRequired;
+  }
+  public function setUserLists($userLists)
+  {
+    $this->userLists = $userLists;
+  }
+  public function getUserLists()
+  {
+    return $this->userLists;
+  }
+  public function setVendorTypes($vendorTypes)
+  {
+    $this->vendorTypes = $vendorTypes;
+  }
+  public function getVendorTypes()
+  {
+    return $this->vendorTypes;
+  }
+  public function setVerticals($verticals)
+  {
+    $this->verticals = $verticals;
+  }
+  public function getVerticals()
+  {
+    return $this->verticals;
+  }
+  /**
+   * @param Google_Service_AdExchangeBuyer_PretargetingConfigVideoPlayerSizes
+   */
+  public function setVideoPlayerSizes($videoPlayerSizes)
+  {
+    $this->videoPlayerSizes = $videoPlayerSizes;
+  }
+  /**
+   * @return Google_Service_AdExchangeBuyer_PretargetingConfigVideoPlayerSizes
+   */
+  public function getVideoPlayerSizes()
+  {
+    return $this->videoPlayerSizes;
   }
 }
