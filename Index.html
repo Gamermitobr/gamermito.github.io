@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PIX Shop — Checkout</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding:20px; }
+    .card { max-width:520px; margin:0 auto; border:1px solid #eee; padding:20px; border-radius:8px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+    .qr { text-align:center; margin-top:12px; }
+    .btn { display:inline-block; padding:10px 16px; border-radius:6px; background:#0066ff; color:white; text-decoration:none; border:none; cursor:pointer; }
+    .muted { color:#666; font-size:0.9rem; }
+    input[type="number"]{width:120px}
+    .success { color:green; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Loja Demo — Pagamento via PIX</h2>
+    <p class="muted">Coloque o valor, clique em Gerar PIX e escaneie o QR ou copie a chave.</p>
+
+    <div>
+      <label>Descrição: <input id="desc" value="Produto Demo" /></label>
+    </div>
+    <div style="margin-top:8px">
+      <label>Valor (R$):
+        <input id="amount" type="number" min="0.5" step="0.01" value="5.00" />
+      </label>
+    </div>
+
+    <div style="margin-top:12px">
+      <button class="btn" id="generateBtn">Gerar PIX</button>
+    </div>
+
+    <div id="result" style="margin-top:16px; display:none">
+      <h3>Pagamento PIX</h3>
+      <div id="qrWrap" class="qr"></div>
+      <p class="muted">Payload/Chave PIX (copiar para clipboard):</p>
+      <pre id="payload" style="white-space:pre-wrap; background:#f7f7f7; padding:8px; border-radius:6px"></pre>
+      <div style="margin-top:8px">
+        <button class="btn" id="copyBtn">Copiar payload</button>
+        <a id="downloadQr" class="btn" style="background:#22aa66; margin-left:8px">Baixar QR</a>
+      </div>
+      <p id="status" style="margin-top:12px"></p>
+    </div>
+  </div>
+
+  <script>
+    const API = (new URL('', location)).origin.replace(location.origin, 'http://localhost:4000') || 'http://localhost:4000';
+    // If backend is hosted elsewhere, troque a URL acima ou deixe relativa se backend estiver no mesmo host.
+
+    document.getElementById('generateBtn').addEventListener('click', async ()=> {
+      const amount = Number(document.getElementById('amount').value);
+      const description = document.getElementById('desc').value;
+      if (!amount || amount <= 0) return alert('Insira um valor válido');
+
+      document.getElementById('status').textContent = 'Gerando cobrança...';
+      try {
+        const res = await fetch(API + '/create-payment', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ amount, description })
+        });
+        const data = await res.json();
+        if (!data || !data.success) {
+          document.getElementById('status').textContent = 'Erro ao gerar PIX';
+          console.error(data);
+          return;
+        }
+        document.getElementById('result').style.display = 'block';
+        // exibir qr
+        const qrWrap = document.getElementById('qrWrap');
+        qrWrap.innerHTML = '';
+        if (data.qr_base64) {
+          const img = document.createElement('img');
+          img.src = data.qr_base64;
+          img.alt = 'QR PIX';
+          img.style.maxWidth = '260px';
+          img.style.border = '1px solid #ddd';
+          img.style.padding = '8px';
+          img.style.borderRadius = '8px';
+          qrWrap.appendChild(img);
+          // set download link
+          document.getElementById('downloadQr').href = data.qr_base64;
+          document.getElementById('downloadQr').download = 'pix-qr.png';
+        } else {
+          qrWrap.textContent = 'QR não disponível';
+          document.getElementById('downloadQr').style.display = 'none';
+        }
+
+        // payload
+        const payloadEl = document.getElementById('payload');
+        const payloadText = data.payload || JSON.stringify(data.raw || data, null, 2);
+        payloadEl.textContent = payloadText;
+
+        document.getElementById('status').textContent = 'A cobrança PIX foi gerada. Abra no app do seu banco e escaneie o QR ou copie a chave.';
+      } catch (err) {
+        console.error(err);
+        document.getElementById('status').textContent = 'Erro de comunicação com o servidor';
+      }
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', async ()=> {
+      const txt = document.getElementById('payload').textContent;
+      try {
+        await navigator.clipboard.writeText(txt);
+        alert('Payload copiado!');
+      } catch (e) {
+        alert('Erro ao copiar — selecione e copie manualmente.');
+      }
+    });
+  </script>
+</body>
+</html>
