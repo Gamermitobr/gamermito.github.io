@@ -44,7 +44,13 @@ main {
   <header>
     <h1>Minha Loja Online</h1>
   </header>
-<button onclick="abrirCarrinho()" style="position:fixed;bottom:20px;right:20px;background:#ff6f00;color:#fff;border:none;padding:16px 20px;border-radius:50px;font-size:18px;z-index:9999;box-shadow:0 4px 10px rgba(0,0,0,.3);">🛒 Carrinho</button>
+
+<!-- Botão Pix fixo -->
+<button onclick="gerarPix()" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:green;color:white;border:none;padding:16px 22px;font-size:20px;border-radius:50px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.3);">💸 Pagar com Pix</button>
+
+<!-- Botão Pix fixo -->
+<button onclick="gerarPix()" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:green;color:white;border:n
+
 
   <main>
     <div class="produto">
@@ -57,31 +63,31 @@ main {
 
     <div class="produto">
       <h3>Produto 2</h3>
-      <img src="https://via.placeholder.com/500x300" />
+      <ims://via.placeholder.com/500x300" />
       <p>Descrição do produto 2.</p>
       <strong>R$ 35,00</strong>
       <button onclick="addCarrinho('Produto 2', 35)">Adicionar ao Carrinho</button>
     </div>
   </main>
 
-  <div id="carrinho">
-  <button onclick="fecharCarrinho()" style="background:#222;color:#fff;border:none;padding:10px 16px;border-radius:8px;margin-bottom:10px;">Fechar</button>
-  <h2>Seu Carrinho</h2>
-  <div id="listaCarrinho"></div>
+  
   <h3 style="margin-top:10px;">Total: R$ <span id="total">0.00</span></h3>
 
   <!-- Botão PIX dentro do carrinho -->
   <button id="btnPagarpix" onclick="gerarPix()" style="width:100%;padding:14px;background:green;color:white;border:none;border-radius:10px;font-size:18px;margin-top:2px;""">Pagar com Pix</button>
 </div>
-    <h3>Total: R$ <span id="total"></span></h3>
-    <button id="btnPagarpix" onclick="gerarPix()">Pagar com Pix</button>
+    <h3>Total: R$ <function addCarrinho(nome, preco) {
+  gerarPix();
+  console.log('Pagamento iniciado para: ' + nome);
+}arpix" onclick="gerarPix()">Pagar com Pix</button>
   </div>
 
   <script>
     let carrinho = [];
 
     function addCarrinho(nome, preco) {
-  carrinho.push({ nome, preco });
+  gerarPix();
+});
   alert(nome + " adicionado ao carrinho!");
   atualizarCarrinho();
 });
@@ -158,4 +164,5 @@ function fecharCarrinho(){document.getElementById('carrinho').style.right='-100%
     }
   </script>
 </body>
-</html>
+    </html>
+      
