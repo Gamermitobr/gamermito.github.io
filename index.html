@@ -83,5 +83,34 @@
 " + copiaCola);
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <div id="qrModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;">
+    <div style="background:#fff;padding:20px;border-radius:12px;text-align:center;">
+      <h2>Pagamento Pix</h2>
+      <div id="qrCode"></div>
+      <button onclick="fecharQR()" style="margin-top:15px;padding:10px 20px;border:none;background:#222;color:#fff;border-radius:8px;">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    function gerarPix() {
+      const total = document.getElementById('total').innerText;
+      const chavePix = "SEU-EMAIL-OU-CHAVE-AQUI";
+      const nome = "Sua Loja";
+      const cidade = "BRASIL";
+
+      const payload = `00020126360014BR.GOV.BCB.PIX0114${chavePix}5204000053039865405${total}5802BR5913${nome}6006${cidade}62070503***6304`;
+
+      document.getElementById("qrCode").innerHTML = "";
+      new QRCode(document.getElementById("qrCode"), payload);
+
+      document.getElementById("qrModal").style.display = "flex";
+    }
+
+    function fecharQR() {
+      document.getElementById("qrModal").style.display = "none";
+    }
+  </script>
 </body>
 </html>
