@@ -14,16 +14,18 @@
     .produto button { width: 100%; padding: 12px; margin-top: 8px; background: #0d6efd; color: white; border: none; border-radius: 8px; font-size: 16px; }
 
     #carrinho {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  height: 100%;
   background: #fff;
-  padding: 16px;
-  border-top: 2px solid #ccc;
-  display: block;
-  z-index: 1;
-  margin-top: 20px;
+  padding: 20px;
+  box-shadow: -4px 0 12px rgba(0,0,0,.2);
+  z-index: 9999;
+  transition: right .3s ease;
+  overflow-y: auto;
+  border-radius: 16px 0 0 16px;
 }
 
 main {
@@ -42,6 +44,7 @@ main {
   <header>
     <h1>Minha Loja Online</h1>
   </header>
+<button onclick="abrirCarrinho()" style="position:fixed;bottom:20px;right:20px;background:#ff6f00;color:#fff;border:none;padding:16px 20px;border-radius:50px;font-size:18px;z-index:9999;box-shadow:0 4px 10px rgba(0,0,0,.3);">🛒 Carrinho</button>
 
   <main>
     <div class="produto">
@@ -80,6 +83,18 @@ main {
     }
 
     function atualizarCarrinho() {
+  const lista = document.getElementById('listaCarrinho');
+  let html = '';
+  let total = 0;
+
+  carrinho.forEach(item => {
+    html += `<div style='padding:10px 0;border-bottom:1px solid #ddd;'>${item.nome} — <strong>R$ ${item.preco}</strong></div>`;
+    total += item.preco;
+  });
+
+  lista.innerHTML = html;
+  document.getElementById('total').innerText = total.toFixed(2);
+}() {
       const lista = document.getElementById('listaCarrinho');
       let html = '';
       let total = 0;
@@ -104,7 +119,9 @@ main {
 
 " + copiaCola);
     }
-  </script>
+  function abrirCarrinho(){document.getElementById('carrinho').style.right='0';}
+function fecharCarrinho(){document.getElementById('carrinho').style.right='-100%';}
+</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <div id="qrModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;">
