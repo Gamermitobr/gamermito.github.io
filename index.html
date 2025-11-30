@@ -13,7 +13,21 @@
     .produto img { width: 100%; border-radius: 8px; }
     .produto button { width: 100%; padding: 12px; margin-top: 8px; background: #0d6efd; color: white; border: none; border-radius: 8px; font-size: 16px; }
 
-    #carrinho { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 16px; border-top: 2px solid #ccc; display: block !important; }
+    #carrinho {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 16px;
+  border-top: 2px solid #ccc;
+  display: none;
+  z-index: 9999;
+}
+
+main {
+  padding-bottom: 220px !important;
+}
     #carrinho h2 { margin: 0 0 8px 0; }
     #listaCarrinho { max-height: 200px; overflow-y: auto; }
     #btnPagarpix { width: 100%; padding: 14px; background: green; color: white; border: none; border-radius: 10px; margin-top: 10px; font-size: 18px; }
