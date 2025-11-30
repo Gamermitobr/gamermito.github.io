@@ -1,1 +1,114 @@
-TEXTO NÃO DEFINIDO
+<!doctype html>
+<html lang="pt-BR">
+<cabeça>
+  <meta conjunto de caracteres="utf-8"/>
+  <meta nome="janela de visualização"contente="largura=largura-do-dispositivo,escala-inicial=1"/>
+  <título>Loja PIX — Finalizar compra</título>
+  <estilo>
+    corpo{família de fontes:interface do sistema,-sistema-maçã, "Interface de usuário Segoe",Robô, "Helvetica Neue",Arial;acolchoamento:20px; }
+    .cartão{largura-máxima:520px;margem:0auto;fronteira:1pxsólido#eee;acolchoamento:20px;raio-da-borda:8px;sombra de caixa: 0 3px 10px rgba(0,0,0,0,05); }
+    .qr{alinhamento de texto:centro;margem superior:12px; }
+    .botão{mostrar:bloco em linha;acolchoamento:10px 16px;raio-da-borda:6px;fundo:#0066ff;cor:branco;decoração de texto:nenhum;fronteira:nenhum;cursor:ponteiro; }
+    .silenciado{cor:#666;tamanho da fonte:0,9rem; }
+    entrada[tipo="número"]{largura:120px}
+    .sucesso{cor:verde; }
+  </estilo>
+</cabeça>
+<corpo>
+  <div aula="cartão">
+    <h2>Loja Demo — Pagamento via PIX</h2>
+    <p aula="silenciado">Coloque o valor, clique em Gerar PIX e escaneie o QR ou copie a chave.</p>
+
+    <div>
+      <rótulo>Descrição:<entrada eu ia="descrição"valor="Produto Demo"/></rótulo>
+    </div>
+    <div estilo="margem-superior:8px">
+      <rótulo>Valor (R$):
+        <entrada eu ia="quantia"tipo="número"min="0,5"etapa="0,01"valor="5,00"/>
+      </rótulo>
+    </div>
+
+    <div estilo="margem-superior:12px">
+      <botão aula="botão"eu ia="gerarBotão">Gerar PIX</botão>
+    </div>
+
+    <div eu ia="resultado"estilo="margem superior:16px; exibição:nenhuma">
+      <h3>PICPER</h3>
+      <div eu ia="qrWrap"aula="qr"></div>
+      <p aula="silenciado">Payload/Chave PIX (copiar para área de transferência):</p>
+      <pré eu ia="carga útil"estilo="white-space:pre-wrap; background:#f7f7f7; padding:8px; border-radius:6px"></pré>
+      <div estilo="margem-superior:8px">
+        <botão aula="botão"eu ia="botão de copiar">Carga útil Copiar</botão>
+        <um eu ia="baixarQr"aula="botão"estilo="fundo:#22aa66; margem-esquerda:8px">Baixar QR</um>
+      </div>
+      <p eu ia="status"estilo="margem-superior:12px"></p>
+    </div>
+  </div>
+
+  <roteiro>
+    constante API = (novo URL('', localização)).origem.substituir(localização.origem, 'http://localhost:4000') || 'http://localhost:4000';
+    // Se o backend estiver hospedado em outro lugar, troque a URL acima ou deixe relativo se o backend estiver no mesmo host.
+
+    documento.obterElementoPorID('gerarBotão').adicionar ouvinte de eventos('clique', assíncrono ()=> {
+      constante quantia = Número(documento.obterElementoPorID('quantia').valor);
+      constante descrição = documento.obterElementoPorID('desc').valor;
+      se (!quantia || quantia <= 0) retornar alerta('Insira um valor');
+
+      documento.obterElementoPorID('status').Conteúdo do texto = 'Gerando cobrança...';
+      tentar {
+        constante res = aguardar buscar(API + '/criar-pagamento', {
+          método:'PUBLICAR',
+          cabeçalhos:{'Tipo de conteúdo':'application/json'},
+          corpo:JSON.stringificar({quantia,descrição})
+        });
+        constante dados = aguardar res.json();
+        se (!dados || !dados.sucesso) {
+          documento.obterElementoPorID('status').Conteúdo do texto = 'Erro ao gerar PIX';
+          console.erro(dados);
+          retornar;
+        }
+        documento.obterElementoPorID('resultado').estilo.mostrar = 'bloquear';
+        // qr
+        constante qrWrap = documento.obterElementoPorID('qrWrap');
+        qrWrap.HTML interno = '';
+        se (dados.qr_base64) {
+          constante imagem = documento.criarElemento('img');
+          imagem.src = dados.qr_base64;
+          imagem.alt = 'QR PIX';
+          imagem.estilo.largura máxima = '260px';
+          imagem.estilo.fronteira = '1px sólido #ddd';
+          imagem.estilo.acolchoamento = '8px';
+          imagem.estilo.raio da borda = '8px';
+          qrWrap.adicionarFilho(imagem);
+          // definir link de download
+          documento.obterElementoPorID('downloadQr').href = dados.qr_base64;
+          documento.obterElementoPorID('downloadQr').download = 'pix-qr.png';
+        } outro {
+          qrWrap.Conteúdo do texto = 'QR não disponível';
+          documento.obterElementoPorID('downloadQr').estilo.mostrar = 'nenhum';
+        }
+
+        // carga útil
+        constante carga útilEl = documento.obterElementoPorID('carga útil');
+        constante texto da carga = dados.carga útil || JSON.stringificar(dados.cru || dados, nulo, 2);
+        carga útilEl.Conteúdo do texto = texto da carga;
+
+        documento.obterElementoPorID('status').Conteúdo do texto = 'A cobrança PIX foi gerada. Abra no app do seu banco e escaneie o QR ou copie a chave.';
+      } pegar (errar) {
+        console.erro(errar);
+        documento.obterElementoPorID('status').Conteúdo do texto = 'Erro de comunicação com o servidor';
+      }
+    });
+
+    documento.obterElementoPorID('botão de copiar').adicionar ouvinte de eventos('clique', assíncrono ()=> {
+      constante TXT = documento.obterElementoPorID('carga útil').Conteúdo do texto;
+      tentar {
+        aguardar navegador.prancheta.escreverTexto(TXT);
+        alerta('Carga útil copiada!');
+      } pegar (e) {
+        alerta('Erro ao copiar — selecione e copie manualmente.');
+      }
+    });
+  </roteiro>
+</corpo>
+</html>
