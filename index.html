@@ -1,56 +1,87 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <title>Página de Vendas</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Loja Online - Pagamentos via Pix</title>
   <style>
-    body{margin:0;font-family:Arial;background:#f3f4f6;color:#111}
-    header{padding:20px;background:#111;color:#fff;text-align:center}
-    .hero{padding:40px 20px;text-align:center;background:#fff}
-    .hero h1{font-size:28px;margin-bottom:10px}
-    .hero p{font-size:16px;margin-bottom:20px;color:#555}
-    .btn{display:inline-block;padding:14px 20px;background:#2563eb;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold}
-    .section{padding:30px 20px;background:#fff;margin-top:10px}
-    .product{background:#f9fafb;border-radius:10px;padding:20px;margin-bottom:15px;border:1px solid #e5e7eb}
-    .product h3{margin:0 0 10px}
-    footer{text-align:center;padding:15px;color:#555;margin-top:20px}
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
+    header { background: #111; color: white; padding: 16px; text-align: center; }
+    main { padding: 16px; }
+
+    .produto { background: white; padding: 16px; margin-bottom: 16px; border-radius: 12px; }
+    .produto img { width: 100%; border-radius: 8px; }
+    .produto button { width: 100%; padding: 12px; margin-top: 8px; background: #0d6efd; color: white; border: none; border-radius: 8px; font-size: 16px; }
+
+    #carrinho { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 16px; border-top: 2px solid #ccc; display: none; }
+    #carrinho h2 { margin: 0 0 8px 0; }
+    #listaCarrinho { max-height: 200px; overflow-y: auto; }
+    #btnPagarpix { width: 100%; padding: 14px; background: green; color: white; border: none; border-radius: 10px; margin-top: 10px; font-size: 18px; }
   </style>
 </head>
 <body>
   <header>
-    <h2>Minha Loja Online</h2>
+    <h1>Minha Loja Online</h1>
   </header>
 
-  <section class="hero">
-    <h1>Venda Seus Produtos Online</h1>
-    <p>Página simples e rápida para vender usando GitHub Pages, Pix ou links de Checkout.</p>
-    <a href="#produtos" class="btn">Ver Produtos</a>
-  </section>
-
-  <section id="produtos" class="section">
-    <h2>Produtos</h2>
-
-    <div class="product">
+  <main>
+    <div class="produto">
       <h3>Produto 1</h3>
-      <p>Descrição curta do produto.</p>
-      <strong>R$ 29,90</strong>
-      <br><br>
-      <a class="btn" href="#">Comprar Agora</a>
+      <img src="https://via.placeholder.com/500x300" />
+      <p>Descrição do produto 1.</p>
+      <strong>R$ 20,00</strong>
+      <button onclick="addCarrinho('Produto 1', 20)">Adicionar ao Carrinho</button>
     </div>
 
-    <div class="product">
+    <div class="produto">
       <h3>Produto 2</h3>
-      <p>Descrição curta do produto.</p>
-      <strong>R$ 49,90</strong>
-      <br><br>
-      <a class="btn" href="#">Comprar Agora</a>
+      <img src="https://via.placeholder.com/500x300" />
+      <p>Descrição do produto 2.</p>
+      <strong>R$ 35,00</strong>
+      <button onclick="addCarrinho('Produto 2', 35)">Adicionar ao Carrinho</button>
     </div>
+  </main>
 
-  </section>
+  <div id="carrinho">
+    <h2>Carrinho</h2>
+    <div id="listaCarrinho"></div>
+    <h3>Total: R$ <span id="total"></span></h3>
+    <button id="btnPagarpix" onclick="gerarPix()">Pagar com Pix</button>
+  </div>
 
-  <footer>
-    © 2025 Minha Loja — GitHub Pages
-  </footer>
+  <script>
+    let carrinho = [];
+
+    function addCarrinho(nome, preco) {
+      carrinho.push({ nome, preco });
+      atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+      const lista = document.getElementById('listaCarrinho');
+      let html = '';
+      let total = 0;
+
+      carrinho.forEach(item => {
+        html += `<p>${item.nome} — R$ ${item.preco}</p>`;
+        total += item.preco;
+      });
+
+      lista.innerHTML = html;
+      document.getElementById('total').innerText = total.toFixed(2);
+      document.getElementById('carrinho').style.display = 'block';
+    }
+
+    function gerarPix() {
+      const total = document.getElementById('total').innerText;
+      const chavePix = "SEU-EMAIL-OU-CHAVE-AQUI";
+      const mensagem = encodeURIComponent(`Pagamento de R$ ${total}`);
+      const copiaCola = `pix://pagamento?chave=${chavePix}&valor=${total}&mensagem=${mensagem}`;
+
+      alert("Copie o código Pix:
+
+" + copiaCola);
+    }
+  </script>
 </body>
 </html>
