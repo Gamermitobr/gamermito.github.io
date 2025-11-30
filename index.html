@@ -1,115 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Loja Online</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Loja Online - Pagamentos via Pix</title>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        padding: 20px;
-        padding-bottom: 120px; /* evita que o botão tape o produto */
-    }
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
+    header { background: #111; color: white; padding: 16px; text-align: center; }
+    main { padding: 16px; padding-bottom: 120px; }
 
     .produto {
-        border: 1px solid #ccc;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+    }
+    .produto img { width: 100%; border-radius: 8px; }
+    .produto button {
+      width: 100%; padding: 12px; margin-top: 8px;
+      background: #0d6efd; color: white;
+      border: none; border-radius: 8px; font-size: 16px;
     }
 
     /* Botão Pix fixo */
-    .btn-pix-fixo {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: #06c258;
-        color: white;
-        padding: 18px;
-        text-align: center;
-        font-size: 22px;
-        font-weight: bold;
-        cursor: pointer;
+    #pixBtnFixed {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: green;
+      color: white;
+      border: none;
+      padding: 16px 22px;
+      font-size: 20px;
+      border-radius: 50px;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
     }
 
-    /* Tela Pix */
-    .pix-modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.75);
-        justify-content: center;
-        align-items: center;
+    /* Modal Pix */
+    #qrModal {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
     }
 
-    .pix-box {
-        background: white;
-        width: 85%;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        position: relative;
+    #qrBox {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      width: 80%;
+      max-width: 320px;
     }
-
-    /* Botão fechar corrigido */
-    .fechar {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-</style>
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="produto">
-        <h2>Produto 1</h2>
-        <p>Descrição do produto 1</p>
-        <button onclick="abrirPix()">Pagar com Pix</button>
-    </div>
+<header>
+  <h1>Minha Loja Online</h1>
+</header>
 
-    <div class="produto">
-        <h2>Produto 2</h2>
-        <p>Descrição do produto 2</p>
-        <button onclick="abrirPix()">Pagar com Pix</button>
-    </div>
+<!-- Botão Pix fixo -->
+<button id="pixBtnFixed" onclick="gerarPix()">💸 Pagar com Pix</button>
+
+<main>
+  <div class="produto">
+    <h3>Produto 1</h3>
+    <img src="https://via.placeholder.com/500x300" />
+    <p>Descrição do produto 1.</p>
+    <strong>R$ 20,00</strong>
+    <button onclick="setTotal(20)">Comprar agora</button>
+  </div>
+
+  <div class="produto">
+    <h3>Produto 2</h3>
+    <img src="https://via.placeholder.com/500x300" />
+    <p>Descrição do produto 2.</p>
+    <strong>R$ 35,00</strong>
+    <button onclick="setTotal(35)">Comprar agora</button>
+  </div>
+</main>
+
+<h3 style="padding:16px;">Total selecionado: R$ <span id="total">0.00</span></h3>
+
+<!-- Modal Pix -->
+<div id="qrModal">
+  <div id="qrBox">
+    <h2>Pagamento Pix</h2>
+    <div id="qrCode"></div>
+    <button onclick="fecharQR()" style="margin-top:15px;padding:10px 20px;border:none;background:#222;color:#fff;border-radius:8px;">
+      Fechar
+    </button>
+  </div>
 </div>
 
-<!-- Botão Pix Fixo -->
-<div class="btn-pix-fixo" onclick="abrirPix()">
-    PAGAR AGORA VIA PIX
-</div>
-
-<!-- Tela Pix -->
-<div class="pix-modal" id="pixmodal">
-    <div class="pix-box">
-        <div class="fechar" onclick="fecharPix()">×</div>
-        <h2>Pague via Pix</h2>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=pix" width="250" />
-        <p>Clique e copie:</p>
-        <textarea readonly style="width:100%;height:60px;">chave-pix-exemplo</textarea>
-    </div>
-</div>
+<!-- QR Code Lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
-function abrirPix() {
-    document.getElementById("pixmodal").style.display = "flex";
+
+let totalSelecionado = 0;
+
+function setTotal(valor){
+  totalSelecionado = valor;
+  document.getElementById("total").innerText = valor.toFixed(2);
+  gerarPix();
 }
 
-function fecharPix() {
-    document.getElementById("pixmodal").style.display = "none";
+/* ---- GERAR PIX ---- */
+function gerarPix() {
+
+  if(totalSelecionado <= 0){
+    alert("Selecione um produto antes.");
+    return;
+  }
+
+  const chavePix = "SUA-CHAVE-PIX-AQUI";
+  const nome = "Sua Loja";
+  const cidade = "BRASIL";
+  const total = totalSelecionado.toFixed(2);
+
+  const payload = `00020126360014BR.GOV.BCB.PIX0114${chavePix}5204000053039865405${total}5802BR5913${nome}6006${cidade}62070503***6304`;
+
+  document.getElementById("qrCode").innerHTML = "";
+  new QRCode(document.getElementById("qrCode"), payload);
+
+  document.getElementById("qrModal").style.display = "flex";
 }
+
+function fecharQR(){
+  document.getElementById("qrModal").style.display = "none";
+}
+
 </script>
 
 </body>
