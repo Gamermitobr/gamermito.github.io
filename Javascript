@@ -1,0 +1,27 @@
+// app.js (frontend)
+function comprar(serviceId, price){
+  document.getElementById('serviceId').value = serviceId;
+  document.getElementById('pedido').style.display = 'block';
+  document.getElementById('catalogo').style.display = 'none';
+}
+
+document.getElementById('orderForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const serviceId = document.getElementById('serviceId').value;
+  const target = document.getElementById('targetUrl').value;
+  const quantity = Number(document.getElementById('quantity').value);
+
+  const resp = await fetch('https://seu-backend.vercel.app/api/create-order', {
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body: JSON.stringify({ serviceId, target, quantity })
+  });
+  const data = await resp.json();
+  if(resp.ok){
+    document.getElementById('status').innerText = 'Pedido criado! Redirecionando para pagamento...';
+    // redireciona para checkout externo fornecido pelo backend
+    window.location.href = data.checkoutUrl;
+  } else {
+    document.getElementById('status').innerText = 'Erro: ' + (data.message || 'Tente novamente');
+  }
+});
