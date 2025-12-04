@@ -1,42 +1,200 @@
-<!-- index.html (simplificado) -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Painel SMM - Demo</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel SMM - GitHub Pages (Mock)</title>
+  <meta name="description" content="Painel SMM completo em um único arquivo para hospedar no GitHub Pages. Mock sem backend (usando localStorage)." />
+  <!--
+    Instruções rápidas:
+    1) Salve este arquivo como index.html e publique no repositório GitHub Pages (branch gh-pages ou main/docs).
+    2) Este painel é uma versão 'static mock' - todas as ações são simuladas via localStorage.
+       Para torná-lo funcional com pagamentos/serviços reais você precisa conectar uma API/serviço de pagamento e um backend.
+    3) Personalize servicesData no script para ajustar serviços, preços e campos.
+  -->
+  <style>
+    /* Minimal modern styles (responsive) */
+    :root{--accent:#0ea5a4;--dark:#0b1220;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0;background:#f8fafc;color:#0f1724}
+    header{background:linear-gradient(90deg,var(--accent),#06b6d4);color:white;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
+    header h1{margin:0;font-size:18px}
+    .container{max-width:1100px;margin:24px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:260px 1fr;gap:20px}
+    nav{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+    nav button{display:block;width:100%;text-align:left;padding:10px;border-radius:8px;border:none;background:transparent;margin-bottom:6px;cursor:pointer}
+    nav button.active{background:rgba(14,165,164,0.08)}
+    .card{background:white;border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+    .services-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .service{border-radius:10px;padding:12px;border:1px solid #eef2f7}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+    input,select,textarea{padding:8px;border-radius:8px;border:1px solid #e6eef2;width:100%}
+    table{width:100%;border-collapse:collapse}
+    td,th{padding:8px;border-bottom:1px solid #eef2f7;text-align:left}
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}.container{margin:12px}}
+  </style>
 </head>
 <body>
-  <header><h1>Painel SMM</h1></header>
-
-  <main>
-    <section id="catalogo">
-      <h2>Serviços</h2>
-      <div class="servico" data-id="service_1" data-price="5">
-        <h3>100 Likes Instagram</h3>
-        <p>Preço: R$5</p>
-        <button onclick="comprar('service_1', 5)">Comprar</button>
+  <header>
+    <h1>Painel SMM — Mock (GitHub Pages)</h1>
+    <div class="row" style="gap:12px">
+      <div id="userBadge" class="row" style="gap:8px">
+        <strong id="username">Visitante</strong>
+        <button class="btn" id="loginBtn">Entrar</button>
       </div>
-    </section>
+    </div>
+  </header>
 
-    <section id="pedido" style="display:none">
-      <h2>Fazer Pedido</h2>
-      <form id="orderForm">
-        <input type="hidden" id="serviceId"/>
-        <label>URL alvo (ex: https://instagram.com/...)<br/>
-          <input id="targetUrl" required/>
-        </label><br/>
-        <label>Quantidade<br/>
-          <input id="quantity" type="number" min="1" value="100" required/>
-        </label><br/>
-        <button type="submit">Pagar e Enviar Pedido</button>
-      </form>
-    </section>
+  <div class="container">
+    <div class="grid">
+      <nav class="card" id="sidebar">
+        <button data-view="dashboard" class="active">Dashboard</button>
+        <button data-view="services">Serviços</button>
+        <button data-view="orders">Meus Pedidos</button>
+        <button data-view="balance">Saldo / Carteira</button>
+        <button data-view="admin">Admin</button>
+        <div style="margin-top:10px" class="muted">Versão: 1.0 • Mock sem backend</div>
+      </nav>
 
-    <section id="status"></section>
-  </main>
+      <main id="mainArea">
+        <!-- Conteúdo dinâmico inserido pelo JS -->
+      </main>
+    </div>
 
-<script src="app.js"></script>
-</body>
-</html>
+    <footer>
+      Este painel é apenas um protótipo. Para produção, adicione autenticação real, backend e integração de pagamentos.
+    </footer>
+  </div>
+
+<script>
+/* ======================================================
+   Painel SMM - Single-file mock
+   - Todos os dados são salvos em localStorage
+   - Para onboard real: conecte APIs (pagamento, serviços)
+   - Edite a variável servicesData para mudar oferta
+   ======================================================*/
+
+// === Dados iniciais (personalize) ===
+const servicesData = [
+  {id:'srv1', name:'Instagram Followers', category:'Instagram', min:100, max:10000, pricePer100:2.5, desc:'Seguidores reais e de alta retenção.'},
+  {id:'srv2', name:'Instagram Likes', category:'Instagram', min:50, max:5000, pricePer100:1.0, desc:'Curtidas entregues rapidamente.'},
+  {id:'srv3', name:'YouTube Views', category:'YouTube', min:100, max:100000, pricePer100:1.2, desc:'Views de sessão completa.'},
+  {id:'srv4', name:'TikTok Plays', category:'TikTok', min:100, max:100000, pricePer100:0.9, desc:'Visualizações em massa para viralização.'}
+];
+
+// Simples usuário mock
+const MOCK_ADMIN_PASS = 'admin1234';
+
+// === Utilitários de armazenamento ===
+function getState(){
+  return JSON.parse(localStorage.getItem('smm_state_v1') || '{}');
+}
+function saveState(state){
+  localStorage.setItem('smm_state_v1', JSON.stringify(state));
+}
+function ensureInit(){
+  const s = getState();
+  if(!s.users){
+    s.users = [{username:'admin', displayName:'Administrador', balance:100.00, isAdmin:true}];
+    s.orders = [];
+    s.nextOrderId = 1;
+    saveState(s);
+  }
+}
+ensureInit();
+
+// === Navegação ===
+const sidebar = document.getElementById('sidebar');
+const mainArea = document.getElementById('mainArea');
+const loginBtn = document.getElementById('loginBtn');
+const usernameEl = document.getElementById('username');
+
+function setActiveNav(key){
+  [...sidebar.querySelectorAll('button')].forEach(b=>b.classList.toggle('active', b.dataset.view===key));
+}
+
+sidebar.addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  const view = btn.dataset.view;
+  setActiveNav(view);
+  renderView(view);
+});
+
+loginBtn.addEventListener('click', ()=>{
+  if(currentUser()){
+    // logout
+    localStorage.removeItem('smm_current_user');
+    updateUserBadge();
+    renderView('dashboard');
+    return;
+  }
+  const name = prompt('Digite o nome de usuário (admin para painel admin):','user1');
+  if(!name) return;
+  // se for admin, pedir senha
+  if(name==='admin'){
+    const p = prompt('Senha do admin:');
+    if(p!==MOCK_ADMIN_PASS){alert('Senha inválida');return;}
+  }
+  // criar usuário simples
+  const s = getState();
+  let u = s.users.find(x=>x.username===name);
+  if(!u){
+    u = {username:name, displayName:name, balance:10.00, isAdmin: name==='admin'};
+    s.users.push(u);
+    saveState(s);
+  }
+  localStorage.setItem('smm_current_user', name);
+  updateUserBadge();
+  renderView('dashboard');
+});
+
+function currentUser(){
+  const name = localStorage.getItem('smm_current_user');
+  if(!name) return null;
+  const s = getState();
+  return s.users.find(u=>u.username===name) || null;
+}
+
+function updateUserBadge(){
+  const u = currentUser();
+  if(u){
+    usernameEl.textContent = u.displayName;
+    loginBtn.textContent = 'Sair';
+  } else { usernameEl.textContent = 'Visitante'; loginBtn.textContent = 'Entrar'; }
+}
+updateUserBadge();
+
+// === Renderers ===
+function renderView(view='dashboard'){
+  if(view==='dashboard') return renderDashboard();
+  if(view==='services') return renderServices();
+  if(view==='orders') return renderOrders();
+  if(view==='balance') return renderBalance();
+  if(view==='admin') return renderAdmin();
+}
+
+function renderDashboard(){
+  setActiveNav('dashboard');
+  mainArea.innerHTML = `
+    <div class="card">
+      <h2>Bem-vindo ao Painel SMM</h2>
+      <p class="muted">Este é um painel estático (mock) para Github Pages. Use-o como protótipo ou para testes.</p>
+      <div style="margin-top:12px">
+        <strong>Serviços disponíveis:</strong>
+        <div class="services-list" style="margin-top:8px">
+          ${servicesData.map(s=>`<div class="service"><strong>${s.name}</strong><div class="muted">${s.category}</div><div style="margin-top:8px">${s.desc}</div><div style="margin-top:8px" class="row"><button class="btn" onclick="openOrderForm('${s.id}')">Pedir</button></div></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderServices(){
+  setActiveNav('services');
+  mainArea.innerHTML = `
+    <div class="card">
+      <h2>Catálogo d
