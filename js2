@@ -1,0 +1,8 @@
+// chamada ao fornecedor
+const res = await fetch('https://fornecedor.example/api/order', {
+  method:'POST',
+  headers:{ 'Authorization': 'Bearer ' + process.env.SMM_API_KEY, 'Content-Type':'application/json' },
+  body: JSON.stringify({ service: serviceId, link: target, quantity })
+});
+const body = await res.json();
+// atualiza o order no DB com provider_order_id e status
